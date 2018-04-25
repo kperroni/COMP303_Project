@@ -3,6 +3,10 @@
 -- Host: localhost    Database: assignmentdb
 -- ------------------------------------------------------
 -- Server version	5.7.21-log
+create schema assignmentdb;
+
+USE assignmentdb;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
