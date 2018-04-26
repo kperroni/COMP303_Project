@@ -22,39 +22,56 @@ import model.Course;
 public class CourseController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static EntityManager em;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CourseController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public CourseController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		System.out.println("In the controller");
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectDataStore");
 		em = emf.createEntityManager();
 		Query q = em.createNamedQuery("Course.findAll");
-		
-		List<Course> courses =  q.getResultList();
-		for (Course course : courses) {
-			System.out.println(course.getCourseName());
-		}
-		 
+		List<Course> courses = q.getResultList();
+		request.setAttribute("courses", courses);
+		request.getRequestDispatcher("/listCourses.jsp").forward(request, response);
+		;
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		Query q = em.createNamedQuery("Course.findAll");
+		List<Course> courses = q.getResultList();
+		for (Course course : courses) {
+			if (request.getParameter("btnUpdate_" + course.getCourseCode()) != null) {
+				System.out.println("I clicked update on the coursecode = "+course.getCourseCode());
+				  Course courseUpdate = em.find(Course.class, course.getCourseCode());
+				  System.out.println("New course name "+request.getParameter("courseName_"+course.getCourseCode()));
+				  em.getTransaction().begin();
+				  courseUpdate.setCourseName(request.getParameter("courseName_"+course.getCourseCode()));
+				  em.getTransaction().commit();
+				  break;
+			}
+			if (request.getParameter("btnDelete_" + course.getCourseCode()) != null) {
+				System.out.println("I clicked delete on the coursecode = "+course.getCourseCode());
+			}
+		}
 
+	}
 }
