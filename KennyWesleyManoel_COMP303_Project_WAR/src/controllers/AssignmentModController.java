@@ -69,6 +69,8 @@ public class AssignmentModController extends HttpServlet {
 				System.out.println("I clicked update on the assignment where title = " + assgn.getTitle());
 				Assignment assgnUpdate = em.find(Assignment.class, assgn.getId());
 				em.getTransaction().begin();
+				Course course = em.find(Course.class, request.getParameter("assignment-courseCode_" + assgn.getId()));
+				assgnUpdate.setCourse(course);
 				assgnUpdate.setTitle(request.getParameter("title_" + assgn.getId()));
 				assgnUpdate.setDescription(request.getParameter("description_" + assgn.getId()));
 				String dd_str = request.getParameter("dueDate_" + assgn.getId());

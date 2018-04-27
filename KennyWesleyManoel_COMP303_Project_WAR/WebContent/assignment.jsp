@@ -51,7 +51,7 @@
 		<ion-content>
 		<div class="row header">
 			<div class="col">Course Code</div>
-			<div class="col">Course Name</div>
+			<div class="col col-20">Course Name</div>
 			<div class="col col-20">Title</div>
 			<div class="col col-10">Weight</div>
 			<div class="col col-20">Due Date</div>
@@ -70,7 +70,7 @@
 						value="${assgn.getCourse().getCourseCode()}" />
 					</label>
 				</div>
-				<div class="col">
+				<div class="col col-20">
 					<label class="item item-input"> <input readonly
 						name="assignment-courseName_${assgn.getId()}" type="text"
 						value="${assgn.getCourse().getCourseName()}" />
