@@ -124,6 +124,7 @@ public class CourseController extends HttpServlet {
 			throws ServletException, IOException, ParseException {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectDataStore");
 		em = emf.createEntityManager();
+		HttpSession session = request.getSession();
 		Assignment a = new Assignment();
 		Course c = new Course();
 		try {
@@ -161,8 +162,8 @@ public class CourseController extends HttpServlet {
 
 		List<Assignment> assignments = q.getResultList();
 
-		// request.setAttribute("assignments", assignments);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		session.setAttribute("assignments", assignments);
+		request.getRequestDispatcher("assignment.jsp").forward(request, response);
 	}
 
 }
