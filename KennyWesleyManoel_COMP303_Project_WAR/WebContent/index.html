@@ -1,16 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="http://code.ionicframework.com/1.0.0/css/ionic.css" />
-	<script src="http://code.ionicframework.com/1.0.0/js/ionic.bundle.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://code.ionicframework.com/1.0.0/css/ionic.css" />
+<script src="http://code.ionicframework.com/1.0.0/js/ionic.bundle.js"></script>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<style>
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	background-color: #111;
+}
+
+.centerlize {
+	width: 92%;
+	height: 33vh;
+	background-color: #e3e7ed;
+	color: black;
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #333;
+	color: white;
+	text-align: center;
+}
+</style>
+<title>Java EE Project</title>
 </head>
 <body>
-<a href="index.jsp">Add Course and Assignments</a>
-<form method="get" action="CourseController">
-<button type="submit">Test</button>
-</form>
+	<ul>
+		<li><a class="active" href="#home">Home</a></li>
+		<li><a href="index.jsp">Add a Course</a></li>
+		<li><a href="CourseController">List Courses</a></li>
+		<li><a href="#">Add an Assignment</a></li>
+		<li><a href="#">List Assignments</a></li>
+	</ul>
+
+	<div class="centerlize" style="margin: 2rem 2rem 2rem 2rem;">
+		<h1 style="margin-left: 1rem">Problems with your assignments?</h1>
+		<hr>
+		<br>
+		<p style="font-size: 18px; margin: 1rem 1rem 1rem 1rem;">Organise
+			your assignments in no time! Create your course load and add
+			assignments for you to track. Do not worry if you made a mistake
+			because you can edit any information at will. What are you waiting
+			for? Go for those high grades!</p>
+	</div>
+
+	<div class="centerlize" style="margin: 2rem 2rem 2rem 2rem;">
+		<h1 style="margin-left: 1rem">Need support?</h1>
+		<hr>
+		<br>
+		<p style="font-size: 18px; margin: 1rem 1rem 1rem 1rem;">Contact
+			our team at 555-555-5555 for any inquiries. The authors of this app
+			are Kenny Perroni #300825160, Wesley Angus #300123123, and Manoel
+			Britto #300123123. This app is a project for the course Java EE
+			developed using JPA, JSP, and Java Beans technology.</p>
+	</div>
+
+	<div class="footer">
+		<p>COMP 303 - Java EE Project</p>
+	</div>
 </body>
 </html>

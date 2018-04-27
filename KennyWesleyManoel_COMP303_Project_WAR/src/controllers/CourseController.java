@@ -73,7 +73,10 @@ public class CourseController extends HttpServlet {
 				System.out.println("New course name " + request.getParameter("courseName_" + course.getCourseCode()));
 				em.getTransaction().begin();
 				courseUpdate.setCourseName(request.getParameter("courseName_" + course.getCourseCode()));
+				courseUpdate.setDescription(request.getParameter("description_" + course.getCourseCode()));
+				courseUpdate.setSemester(request.getParameter("semester_" + course.getCourseCode()));
 				em.getTransaction().commit();
+				this.doGet(request, response);
 				break;
 			}
 			if (request.getParameter("btnDelete_" + course.getCourseCode()) != null) {
@@ -82,6 +85,7 @@ public class CourseController extends HttpServlet {
 				em.getTransaction().begin();
 				em.remove(courseDelete);
 				em.getTransaction().commit();
+				this.doGet(request, response);
 				break;
 			}
 		}

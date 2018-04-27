@@ -12,6 +12,9 @@
 <title>Project Comp303</title>
 </head>
 <body>
+	<ion-nav-bar> <ion-nav-back-button class="button-clear">
+	<a href="index.html"><i class="ion-arrow-left-c">Back to Home</i></a> </ion-nav-back-button>
+	<!-- Initial content --> </ion-nav-bar>
 	<span style="color: red;">${messageCourse}
 
 		<form action="CourseController?action=addCourse" method="post">
