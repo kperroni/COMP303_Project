@@ -13,6 +13,10 @@
 </head>
 <body>
 	<span style="color: red;">${messageCourse}</span>
+	<ion-nav-bar> <ion-nav-back-button class="button-clear">
+	<a href="index.html"><i class="ion-arrow-left-c">Back to Home</i></a> </ion-nav-back-button>
+	<!-- Initial content --> </ion-nav-bar>
+	<span style="color: red;">${messageCourse}</span>
 
 	<form action="CourseController?action=addCourse" method="post">
 		<h3>Create Course</h3>
