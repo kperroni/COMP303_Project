@@ -60,16 +60,21 @@ public class CourseController extends HttpServlet {
 		List<Course> courses = q.getResultList();
 		for (Course course : courses) {
 			if (request.getParameter("btnUpdate_" + course.getCourseCode()) != null) {
-				System.out.println("I clicked update on the coursecode = "+course.getCourseCode());
-				  Course courseUpdate = em.find(Course.class, course.getCourseCode());
-				  System.out.println("New course name "+request.getParameter("courseName_"+course.getCourseCode()));
-				  em.getTransaction().begin();
-				  courseUpdate.setCourseName(request.getParameter("courseName_"+course.getCourseCode()));
-				  em.getTransaction().commit();
-				  break;
+				System.out.println("I clicked update on the coursecode = " + course.getCourseCode());
+				Course courseUpdate = em.find(Course.class, course.getCourseCode());
+				System.out.println("New course name " + request.getParameter("courseName_" + course.getCourseCode()));
+				em.getTransaction().begin();
+				courseUpdate.setCourseName(request.getParameter("courseName_" + course.getCourseCode()));
+				em.getTransaction().commit();
+				break;
 			}
 			if (request.getParameter("btnDelete_" + course.getCourseCode()) != null) {
-				System.out.println("I clicked delete on the coursecode = "+course.getCourseCode());
+				System.out.println("I clicked delete on the coursecode = " + course.getCourseCode());
+				Course courseDelete = em.find(Course.class, course.getCourseCode());
+				em.getTransaction().begin();
+				em.remove(courseDelete);
+				em.getTransaction().commit();
+				break;
 			}
 		}
 

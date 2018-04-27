@@ -25,7 +25,7 @@
 		<c:forEach items="${courses}" var="course">
 			<div class="row">
 				<div class="col">
-					<label class="item item-input"> <input name="courseCode_${course.getCourseCode()}" type="text"
+					<label class="item item-input"> <input readonly="" name="courseCode_${course.getCourseCode()}" type="text"
 						value="${course.getCourseCode()}" />
 					</label>
 				</div>
