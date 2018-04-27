@@ -1,16 +1,18 @@
 package model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.persistence.*;
 import java.util.Date;
-
 
 /**
  * The persistent class for the assignment database table.
  * 
  */
 @Entity
-@NamedQuery(name="Assignment.findAll", query="SELECT a FROM Assignment a")
+@NamedQuery(name = "Assignment.findAll", query = "SELECT a FROM Assignment a")
 public class Assignment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,9 +32,9 @@ public class Assignment implements Serializable {
 
 	private String weight;
 
-	//bi-directional many-to-one association to Course
+	// bi-directional many-to-one association to Course
 	@ManyToOne
-	@JoinColumn(name="courseCode")
+	@JoinColumn(name = "courseCode")
 	private Course course;
 
 	public Assignment() {
@@ -64,6 +66,11 @@ public class Assignment implements Serializable {
 
 	public Date getDueDate() {
 		return this.dueDate;
+	}
+
+	public String getStringDueDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(this.dueDate);
 	}
 
 	public void setDueDate(Date dueDate) {

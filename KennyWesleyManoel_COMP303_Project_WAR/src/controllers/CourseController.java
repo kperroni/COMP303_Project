@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.sql.SQLDataException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,7 +85,6 @@ public class CourseController extends HttpServlet {
 			}
 		}
 
-		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 
 		if (action != null) {
@@ -156,7 +154,7 @@ public class CourseController extends HttpServlet {
 			String asDesciption = request.getParameter("asDesciption");
 			String asType = request.getParameter("asType");
 
-			Date dateDueDate = new SimpleDateFormat("dd/MM/yyyy").parse(asDueDate);
+			Date dateDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(asDueDate);
 
 			a.setCourse(c);
 			a.setTitle(astTitle);
@@ -182,7 +180,7 @@ public class CourseController extends HttpServlet {
 		List<Assignment> assignments = q.getResultList();
 
 		session.setAttribute("assignments", assignments);
-		request.getRequestDispatcher("assignment.jsp").forward(request, response);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 }

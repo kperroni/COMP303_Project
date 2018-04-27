@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -14,19 +14,78 @@
 	<ion-header-bar class="bar-stable">
 	<h4 class="title">View/Edit Assignments</h4>
 	</ion-header-bar>
-	<ion-content>
-	<div class="row header">
-		<div class="col">Course Name</div>
-		<div class="col">Course Code</div>
-		<div class="col">Title</div>
-	</div>
-	<span style="color: red;">${message}</span> <c:forEach
-		items="${assignments}" var="assignment">
-		<div class="row">
-			<div class="col">${assignment.getCourse().getCourseName()}</div>
-			<div class="col">${assignment.getCourse().getCourseCode()}</div>
-			<div class="col">${assignment.getTitle()}</div>
+	<form action="Assignments" method="post">
+		<ion-header-bar class="bar-stable">
+		<h4 class="title">List of your assignments</h4>
+		</ion-header-bar>
+		<ion-content>
+		<div class="row header">
+			<div class="col">Course Code</div>
+			<div class="col">Course Name</div>
+			<div class="col">Title</div>
+			<div class="col">Weight</div>
+			<div class="col">Due Date</div>
+			<div class="col">Type</div>
+			<div class="col"></div>
 		</div>
-	</c:forEach> </ion-content>
+		<div class="row header">
+			<div class="col">Description</div>
+			<div class="col"></div>
+		</div>
+		<c:forEach items="${assignments}" var="assgn">
+			<div class="row">
+				<div class="col">
+					<label class="item item-input"> <input
+						name="assignment-courseCode_${assgn.getId()}" type="text"
+						value="${assgn.getCourse().getCourseCode()}" />
+					</label>
+				</div>
+				<div class="col">
+					<label class="item item-input"> <input readonly
+						name="assignment-courseName_${assgn.getId()}" type="text"
+						value="${assgn.getCourse().getCourseName()}" />
+					</label>
+				</div>
+				<div class="col col-20">
+					<label class="item item-input"> <input
+						name="title_${assgn.getId()}" type="text"
+						value="${assgn.getTitle()}" />
+					</label>
+				</div>
+				<div class="col col-10">
+					<label class="item item-input"> <input
+						name="weight_${assgn.getId()}" type="text"
+						value="${assgn.getWeight()}" />
+					</label>
+				</div>
+				<div class="col">
+					<label class="item item-input"> <input
+						name="dueDate_${assgn.getId()}" type="date"
+						value="${assgn.getStringDueDate()}" />
+					</label>
+				</div>
+				<div class="col">
+					<label class="item item-input"> <input
+						name="type_${assgn.getId()}" type="text"
+						value="${assgn.getType()}" />
+					</label>
+				</div>
+				<div class="col">
+					<button name="btnUpdate_${assgn.getId()}" class="button">Update</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col col-80">
+					<label class="item item-input"> <input
+						name="description_${assgn.getId()}" type="text"
+						value="${assgn.getDescription()}" />
+					</label>
+				</div>
+				<div class="col">
+					<button name="btnDelete_${assgn.getId()}" class="button">Delete</button>
+				</div>
+			</div>
+		</c:forEach> </ion-content>
+	</form>
 </body>
 </html>

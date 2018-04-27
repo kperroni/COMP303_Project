@@ -21,6 +21,7 @@
 			<div class="col">Course Name</div>
 			<div class="col">Description</div>
 			<div class="col">Semester</div>
+			<div class="col"></div>
 		</div>
 		<c:forEach items="${courses}" var="course">
 			<div class="row">
@@ -46,8 +47,6 @@
 				</div>
 				<div class="col">
 					<button name="btnUpdate_${course.getCourseCode()}" class="button">Update</button>
-				</div>
-				<div class="col">
 					<button name="btnDelete_${course.getCourseCode()}" class="button">Delete</button>
 				</div>
 			</div>
