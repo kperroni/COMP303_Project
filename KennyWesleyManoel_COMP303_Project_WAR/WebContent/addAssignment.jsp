@@ -27,7 +27,8 @@
 		<!--  <label class="item item-input"> <span class="input-label">
 				Course Code:</span> <input name="courseCode"
 			placeholder="Enter Course Code" required="true" type="text" />-->
-		
+		</label> <label class="item item-input"> <span class="input-label">
+				Course Code:</span>
 			<select name="courseCode">
 				<c:forEach var="item" items="${courses}">
 					<option>${item.getCourseCode()}</option>
