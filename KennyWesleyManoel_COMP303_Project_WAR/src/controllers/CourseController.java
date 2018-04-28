@@ -63,43 +63,41 @@ public class CourseController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
+		if (action != null) {
 
-		if (action.equals("addCourse")) {
+			if (action.equals("addCourse")) {
 
 				addCourse(request, response);
-				
-		
-		}
-		else {
-			
-		
-		
-		Query q = em.createNamedQuery("Course.findAll");
-		List<Course> courses = q.getResultList();
-		for (Course course : courses) {
-			if (request.getParameter("btnUpdate_" + course.getCourseCode()) != null) {
-				System.out.println("I clicked update on the coursecode = " + course.getCourseCode());
-				Course courseUpdate = em.find(Course.class, course.getCourseCode());
-				System.out.println("New course name " + request.getParameter("courseName_" + course.getCourseCode()));
-				em.getTransaction().begin();
-				courseUpdate.setCourseName(request.getParameter("courseName_" + course.getCourseCode()));
-				courseUpdate.setDescription(request.getParameter("description_" + course.getCourseCode()));
-				courseUpdate.setSemester(request.getParameter("semester_" + course.getCourseCode()));
-				em.getTransaction().commit();
-				this.doGet(request, response);
-				break;
-			}
-			if (request.getParameter("btnDelete_" + course.getCourseCode()) != null) {
-				System.out.println("I clicked delete on the coursecode = " + course.getCourseCode());
-				Course courseDelete = em.find(Course.class, course.getCourseCode());
-				em.getTransaction().begin();
-				em.remove(courseDelete);
-				em.getTransaction().commit();
-				this.doGet(request, response);
-				break;
-			}
-		}
 
+			}
+		} else {
+
+			Query q = em.createNamedQuery("Course.findAll");
+			List<Course> courses = q.getResultList();
+			for (Course course : courses) {
+				if (request.getParameter("btnUpdate_" + course.getCourseCode()) != null) {
+					System.out.println("I clicked update on the coursecode = " + course.getCourseCode());
+					Course courseUpdate = em.find(Course.class, course.getCourseCode());
+					System.out
+							.println("New course name " + request.getParameter("courseName_" + course.getCourseCode()));
+					em.getTransaction().begin();
+					courseUpdate.setCourseName(request.getParameter("courseName_" + course.getCourseCode()));
+					courseUpdate.setDescription(request.getParameter("description_" + course.getCourseCode()));
+					courseUpdate.setSemester(request.getParameter("semester_" + course.getCourseCode()));
+					em.getTransaction().commit();
+					this.doGet(request, response);
+					break;
+				}
+				if (request.getParameter("btnDelete_" + course.getCourseCode()) != null) {
+					System.out.println("I clicked delete on the coursecode = " + course.getCourseCode());
+					Course courseDelete = em.find(Course.class, course.getCourseCode());
+					em.getTransaction().begin();
+					em.remove(courseDelete);
+					em.getTransaction().commit();
+					this.doGet(request, response);
+					break;
+				}
+			}
 
 		}
 	}
@@ -130,14 +128,11 @@ public class CourseController extends HttpServlet {
 			request.setAttribute("messageCourse", "Course Code Already exist");
 			err = true;
 		}
-		if (err==false) {
+		if (err == false) {
 			request.setAttribute("messageCourseSucess", "Course Created");
 		}
-		
 
 		request.getRequestDispatcher("addCourse.jsp").forward(request, response);
 	}
-
-	
 
 }

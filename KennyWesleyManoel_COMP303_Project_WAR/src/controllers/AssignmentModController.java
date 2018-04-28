@@ -50,11 +50,13 @@ public class AssignmentModController extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		Query q = em.createNamedQuery("Assignment.findAll");
-		/*Query q2 = em.createNamedQuery("Course.findAll");
-		
-		List<Course> courses = q2.getResultList();
-		request.setAttribute("courses", courses);
-		request.getRequestDispatcher("AddAssignment.jsp").forward(request, response);*/
+		/*
+		 * Query q2 = em.createNamedQuery("Course.findAll");
+		 * 
+		 * List<Course> courses = q2.getResultList(); request.setAttribute("courses",
+		 * courses); request.getRequestDispatcher("AddAssignment.jsp").forward(request,
+		 * response);
+		 */
 
 		List<Assignment> assignments = q.getResultList();
 		session.setAttribute("assignments", assignments);
@@ -70,14 +72,15 @@ public class AssignmentModController extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		String action = request.getParameter("action");
+		if (action != null) {
+			if (action.equals("addAssignment")) {
 
-		if (action.equals("addAssignment")) {
-
-			try {
-				addAssignment(request, response);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					addAssignment(request, response);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		} else {
@@ -156,13 +159,12 @@ public class AssignmentModController extends HttpServlet {
 			request.setAttribute("messageAssignment", "Course Code Not Found");
 			err = true;
 		}
-		if (err==false) {
+		if (err == false) {
 			request.setAttribute("messageAssignmentSucess", "Assignment Created");
 		}
 		// session.setAttribute("assignments", assignments);
 		request.getRequestDispatcher("addAssignment.jsp").forward(request, response);
-		
+
 	}
-	
 
 }
