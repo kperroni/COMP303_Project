@@ -3,11 +3,13 @@ package controllers;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,39 +64,99 @@ public class AssignmentModController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		List<Assignment> assignments = (List<Assignment>) session.getAttribute("assignments");
-		for (Assignment assgn : assignments) {
-			if (request.getParameter("btnUpdate_" + assgn.getId()) != null) {
-				System.out.println("I clicked update on the assignment where title = " + assgn.getTitle());
-				Assignment assgnUpdate = em.find(Assignment.class, assgn.getId());
-				em.getTransaction().begin();
-				Course course = em.find(Course.class, request.getParameter("assignment-courseCode_" + assgn.getId()));
-				assgnUpdate.setCourse(course);
-				assgnUpdate.setTitle(request.getParameter("title_" + assgn.getId()));
-				assgnUpdate.setDescription(request.getParameter("description_" + assgn.getId()));
-				String dd_str = request.getParameter("dueDate_" + assgn.getId());
-				try {
-					assgnUpdate.setDueDate(new SimpleDateFormat("yyyy-MM-dd").parse(dd_str));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				assgnUpdate.setWeight(request.getParameter("weight_" + assgn.getId()));
-				assgnUpdate.setType(request.getParameter("type_" + assgn.getId()));
-				em.getTransaction().commit();
-				break;
+
+		String action = request.getParameter("action");
+
+		if (action.equals("addAssignment")) {
+
+			try {
+				addAssignment(request, response);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			if (request.getParameter("btnDelete_" + assgn.getId()) != null) {
-				System.out.println("I clicked delete on the assignment where title = " + assgn.getTitle());
-				Assignment assgnDelete = em.find(Assignment.class, assgn.getId());
-				em.getTransaction().begin();
-				em.remove(assgnDelete);
-				em.getTransaction().commit();
-				break;
+
+		} else {
+
+			HttpSession session = request.getSession();
+			List<Assignment> assignments = (List<Assignment>) session.getAttribute("assignments");
+			for (Assignment assgn : assignments) {
+				if (request.getParameter("btnUpdate_" + assgn.getId()) != null) {
+					System.out.println("I clicked update on the assignment where title = " + assgn.getTitle());
+					Assignment assgnUpdate = em.find(Assignment.class, assgn.getId());
+					em.getTransaction().begin();
+					Course course = em.find(Course.class,
+							request.getParameter("assignment-courseCode_" + assgn.getId()));
+					assgnUpdate.setCourse(course);
+					assgnUpdate.setTitle(request.getParameter("title_" + assgn.getId()));
+					assgnUpdate.setDescription(request.getParameter("description_" + assgn.getId()));
+					String dd_str = request.getParameter("dueDate_" + assgn.getId());
+					try {
+						assgnUpdate.setDueDate(new SimpleDateFormat("yyyy-MM-dd").parse(dd_str));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					assgnUpdate.setWeight(request.getParameter("weight_" + assgn.getId()));
+					assgnUpdate.setType(request.getParameter("type_" + assgn.getId()));
+					em.getTransaction().commit();
+					break;
+				}
+				if (request.getParameter("btnDelete_" + assgn.getId()) != null) {
+					System.out.println("I clicked delete on the assignment where title = " + assgn.getTitle());
+					Assignment assgnDelete = em.find(Assignment.class, assgn.getId());
+					em.getTransaction().begin();
+					em.remove(assgnDelete);
+					em.getTransaction().commit();
+					break;
+				}
 			}
 		}
+
 		doGet(request, response);
+	}
+
+	private void addAssignment(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, ParseException {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectDataStore");
+		em = emf.createEntityManager();
+		boolean err = false;
+		HttpSession session = request.getSession();
+		Assignment a = new Assignment();
+		Course c = new Course();
+		try {
+			String courseCode = request.getParameter("courseCode");
+			c.setCourseCode(courseCode); // this link the course created before
+
+			String astTitle = request.getParameter("astTitle");
+			String asWeight = request.getParameter("asWeight");
+			String asDueDate = request.getParameter("asDueDate");
+			String asDesciption = request.getParameter("asDesciption");
+			String asType = request.getParameter("asType");
+
+			Date dateDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(asDueDate);
+
+			a.setCourse(c);
+			a.setTitle(astTitle);
+			a.setWeight(asWeight);
+			a.setDescription(asDesciption);
+			a.setDueDate(dateDueDate);
+			a.setType(asType);
+			em.getTransaction().begin();
+			em.persist(a);
+			em.getTransaction().commit();
+		} catch (ParseException e) {
+			request.setAttribute("messageAssignment", "Date incorrect");
+			err = true;
+		} catch (PersistenceException s) {
+			request.setAttribute("messageAssignment", "Course Code Not Found");
+			err = true;
+		}
+		if (err==false) {
+			request.setAttribute("messageAssignmentSucess", "Assignment Created");
+		}
+		// session.setAttribute("assignments", assignments);
+		request.getRequestDispatcher("addAssignment.jsp").forward(request, response);
 	}
 
 }

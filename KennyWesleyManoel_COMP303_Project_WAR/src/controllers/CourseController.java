@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Course;
-import model.Assignment;
 
 /**
  * Servlet implementation class CourseController
@@ -63,6 +62,18 @@ public class CourseController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String action = request.getParameter("action");
+
+		if (action.equals("addCourse")) {
+
+				addCourse(request, response);
+				
+		
+		}
+		else {
+			
+		
+		
 		Query q = em.createNamedQuery("Course.findAll");
 		List<Course> courses = q.getResultList();
 		for (Course course : courses) {
@@ -89,30 +100,15 @@ public class CourseController extends HttpServlet {
 			}
 		}
 
-		String action = request.getParameter("action");
 
-		if (action != null) {
-			switch (action) {
-			case "addCourse":
-				addCourse(request, response);
-				break;
-			case "addAssignment":
-				try {
-					addAssignment(request, response);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
-			}
 		}
-
 	}
 
 	private void addCourse(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectDataStore");
 		em = emf.createEntityManager();
+		boolean err = false;
 		Course c = new Course();
 
 		String courseCode = request.getParameter("courseCode");
@@ -131,60 +127,17 @@ public class CourseController extends HttpServlet {
 			em.getTransaction().commit();
 			// request.setAttribute("messageCourse", null);
 		} catch (PersistenceException s) {
-			request.setAttribute("messageCourse", s.getMessage());
+			request.setAttribute("messageCourse", "Course Code Already exist");
+			err = true;
 		}
-		Query q = em.createNamedQuery("Course.findAll");
+		if (err==false) {
+			request.setAttribute("messageCourseSucess", "Course Created");
+		}
+		
 
-		List<Course> courses = q.getResultList();
-
-		request.setAttribute("courses", courses);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("addCourse.jsp").forward(request, response);
 	}
 
-	private void addAssignment(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ParseException {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectDataStore");
-		em = emf.createEntityManager();
-		HttpSession session = request.getSession();
-		Assignment a = new Assignment();
-		Course c = new Course();
-		try {
-			String courseCode = request.getParameter("courseCode");
-			c.setCourseCode(courseCode); // this link the course created before
-
-			String astTitle = request.getParameter("astTitle");
-			String asWeight = request.getParameter("asWeight");
-			String asDueDate = request.getParameter("asDueDate");
-			String asDesciption = request.getParameter("asDesciption");
-			String asType = request.getParameter("asType");
-
-			Date dateDueDate = new SimpleDateFormat("yyyy-MM-dd").parse(asDueDate);
-
-			a.setCourse(c);
-			a.setTitle(astTitle);
-			a.setWeight(asWeight);
-			a.setDescription(asDesciption);
-			a.setDueDate(dateDueDate);
-			a.setType(asType);
-		} catch (ParseException e) {
-			request.setAttribute("messageAssignment", e.getMessage());
-		}
-		try {
-
-			em.getTransaction().begin();
-			em.persist(a);
-			em.getTransaction().commit();
-			// request.setAttribute("messageAssignment", null);
-		} catch (PersistenceException s) {
-			request.setAttribute("messageAssignment", s.getMessage());
-		}
-
-		Query q = em.createNamedQuery("Assignment.findAll");
-
-		List<Assignment> assignments = q.getResultList();
-
-		session.setAttribute("assignments", assignments);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
-	}
+	
 
 }
