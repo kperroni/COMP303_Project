@@ -18,16 +18,23 @@
 
 	<span style="color: red;">${messageAssignment}</span>
 	<span style="color: green;">${messageAssignmentSucess}</span>
-	
+	<h3>Create an Assignment and link with a Course</h3>
+
 	<form action="Assignments?action=addAssignment" method="post">
-		<h3>Create an Assignment and link with a Course</h3>
+		
 		<hr>
 
-		<label class="item item-input"> <span class="input-label">
+		<!--  <label class="item item-input"> <span class="input-label">
 				Course Code:</span> <input name="courseCode"
-			placeholder="Enter Course Code" required="true" type="text" />
-
-		</label><label class="item item-input"> <span class="input-label">
+			placeholder="Enter Course Code" required="true" type="text" />-->
+		
+			<select name="courseCode">
+				<c:forEach var="item" items="${courses}">
+					<option>${item.getCourseCode()}</option>
+				</c:forEach>
+			</select>
+			
+		</label> <label class="item item-input"> <span class="input-label">
 				Assignment Title:</span> <input name="astTitle"
 			placeholder="Enter Assignment Title:" required="true" type="text" />
 		</label> <label class="item item-input"> <span class="input-label">
@@ -39,7 +46,7 @@
 		</label> <label class="item item-input"> <span class="input-label">
 				Due Date:</span> <input name="asDueDate" required="true" type="date" />
 		</label> <label class="item item-input"> <span class="input-label">
-				Type:</span> <input name="asType" placeholder="Enter Type]" required="true"
+				Type:</span> <input name="asType" placeholder="Enter Type" required="true"
 			type="text" />
 		</label>
 

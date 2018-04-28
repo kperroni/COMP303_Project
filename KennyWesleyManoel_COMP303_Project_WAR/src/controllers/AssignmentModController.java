@@ -50,9 +50,13 @@ public class AssignmentModController extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		Query q = em.createNamedQuery("Assignment.findAll");
+		/*Query q2 = em.createNamedQuery("Course.findAll");
+		
+		List<Course> courses = q2.getResultList();
+		request.setAttribute("courses", courses);
+		request.getRequestDispatcher("AddAssignment.jsp").forward(request, response);*/
 
 		List<Assignment> assignments = q.getResultList();
-
 		session.setAttribute("assignments", assignments);
 		request.getRequestDispatcher("assignment.jsp").forward(request, response);
 	}
@@ -157,6 +161,8 @@ public class AssignmentModController extends HttpServlet {
 		}
 		// session.setAttribute("assignments", assignments);
 		request.getRequestDispatcher("addAssignment.jsp").forward(request, response);
+		
 	}
+	
 
 }
