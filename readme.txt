@@ -7,8 +7,10 @@ Overview:
 		- 1 KennyWesleyManoel_COMP303_Project_EAR
 		- 2 KennyWesleyManoel_COMP303_Project_JPA
 		- 3 KennyWesleyManoel_COMP303_Project_WAR
-
 Set up:
+	
+	Create the schema database in MySQL with this file:
+		-> assignmentdb.sql
 	This project connects with the MySQL database using JNDI
 		-> set up the WildFly Configuration->Subsystems->Datasources->Non-XA
 		-> make sure to set up the JPA on the 'KennyWesleyManoel_COMP303_Project_JPA' project with the right connection on the Properties->JPA 
