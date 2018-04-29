@@ -3,7 +3,7 @@
 ***********************************************************************************
 Overview:
 
-	There are three Project folders in this Assignment 3:
+	There are three Project folders in this Final Project:
 		- 1 KennyWesleyManoel_COMP303_Project_EAR
 		- 2 KennyWesleyManoel_COMP303_Project_JPA
 		- 3 KennyWesleyManoel_COMP303_Project_WAR
