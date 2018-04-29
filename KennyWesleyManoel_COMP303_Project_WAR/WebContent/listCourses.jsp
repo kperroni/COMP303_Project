@@ -45,6 +45,7 @@
 	<form action="CourseController" method="post">
 		<ion-header-bar class="bar-stable">
 		<h4 class="title">List of your courses</h4>
+		<span style="color: red;">${message}</span>
 		</ion-header-bar>
 		<ion-content>
 		<table id="table">

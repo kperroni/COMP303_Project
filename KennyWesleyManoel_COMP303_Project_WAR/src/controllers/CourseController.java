@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Assignment;
 import model.Course;
 
 /**
@@ -91,15 +92,33 @@ public class CourseController extends HttpServlet {
 				if (request.getParameter("btnDelete_" + course.getCourseCode()) != null) {
 					System.out.println("I clicked delete on the coursecode = " + course.getCourseCode());
 					Course courseDelete = em.find(Course.class, course.getCourseCode());
-					em.getTransaction().begin();
-					em.remove(courseDelete);
-					em.getTransaction().commit();
-					this.doGet(request, response);
-					break;
+					if (!this.checkCourseAssignments(courseDelete)) {
+						request.setAttribute("message", "You must delete all the assignments related with this course first!");
+						this.doGet(request, response);
+					} else {
+						em.getTransaction().begin();
+						em.remove(courseDelete);
+						em.getTransaction().commit();
+						this.doGet(request, response);
+						break;
+					}
 				}
 			}
 
 		}
+	}
+
+	private boolean checkCourseAssignments(Course course) {
+		Query q = em.createNamedQuery("Assignment.findAll");
+		List<Assignment> assignments = q.getResultList();
+		for (Assignment assignment : assignments) {
+			System.out.println(course.getCourseCode());
+			System.out.println(assignment.getCourse().getCourseCode());
+			if (assignment.getCourse().getCourseCode().equals(course.getCourseCode())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void addCourse(HttpServletRequest request, HttpServletResponse response)
