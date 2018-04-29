@@ -9,9 +9,10 @@
 	href="http://code.ionicframework.com/1.0.0/css/ionic.css" />
 <script src="http://code.ionicframework.com/1.0.0/js/ionic.bundle.js"></script>
 <style>
-textarea{
+textarea {
 	resize: vertical;
 }
+
 #table {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
@@ -86,8 +87,10 @@ textarea{
 							name="description_${assgn.getId()}">${assgn.getDescription()}</textarea>
 					</td>
 					<td>
-						<button name="btnUpdate_${assgn.getId()}" class="button button-small">Update</button>
-						<button name="btnDelete_${assgn.getId()}" class="button button-small">Delete</button>
+						<button name="btnUpdate_${assgn.getId()}"
+							class="button button-small">Update</button>
+						<button name="btnDelete_${assgn.getId()}"
+							class="button button-small">Delete</button>
 					</td>
 				</tr>
 			</c:forEach>

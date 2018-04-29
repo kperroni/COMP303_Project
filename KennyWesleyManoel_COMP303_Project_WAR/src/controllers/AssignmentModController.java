@@ -92,14 +92,15 @@ public class AssignmentModController extends HttpServlet {
 					System.out.println("I clicked update on the assignment where title = " + assgn.getTitle());
 					Assignment assgnUpdate = em.find(Assignment.class, assgn.getId());
 					em.getTransaction().begin();
+					String oldCourseCode = assgn.getCourse().getCourseCode();
 					String courseCode = request.getParameter("assignment-courseCode_" + assgn.getId());
 					Course course = em.find(Course.class, courseCode);
 					if (course != null) {
-						assgnUpdate.setCourse(course);
-						request.setAttribute("message", "Course with code " + courseCode + " found.");
-					}
-					else
-					{
+						if (!courseCode.equals(oldCourseCode)) {
+							assgnUpdate.setCourse(course);
+							request.setAttribute("message", "Course with code " + courseCode + " found.");
+						}
+					} else {
 						request.setAttribute("messageErr", "Course with code " + courseCode + " not found.");
 					}
 					assgnUpdate.setTitle(request.getParameter("title_" + assgn.getId()));
