@@ -9,6 +9,9 @@
 	href="http://code.ionicframework.com/1.0.0/css/ionic.css" />
 <script src="http://code.ionicframework.com/1.0.0/js/ionic.bundle.js"></script>
 <style>
+textarea{
+	resize: vertical;
+}
 #table {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
@@ -50,23 +53,23 @@
 		<span style="color: green;">${message}</span>
 		<table id="table">
 			<tr>
-				<th>Course Code</th>
+				<th width="10%">Course Code</th>
+				<th width="20%">Course Name</th>
 				<th width="20%">Title</th>
 				<th width="5%">Weight</th>
 				<th width="10%">Due Date</th>
 				<th width="10%">Type</th>
-				<th></th>
-			</tr>
-			<tr>
-				<th width="20%">Course Name</th>
-				<th colspan="4">Description</th>
+				<th width="20%">Description</th>
 				<th></th>
 			</tr>
 			<c:forEach items="${assignments}" var="assgn">
 				<tr>
-					<td><input style="width: 100%"
+					<td width="10%"><input style="width: 100%"
 						name="assignment-courseCode_${assgn.getId()}" type="text"
 						value="${assgn.getCourse().getCourseCode()}" /></td>
+					<td width="20%"><input style="width: 100%" readonly
+						name="assignment-courseName_${assgn.getId()}" type="text"
+						value="${assgn.getCourse().getCourseName()}" /></td>
 					<td width="20%"><input style="width: 100%"
 						name="title_${assgn.getId()}" type="text"
 						value="${assgn.getTitle()}" /></td>
@@ -76,21 +79,15 @@
 					<td width="10%"><input style="width: 100%"
 						name="dueDate_${assgn.getId()}" type="date"
 						value="${assgn.getStringDueDate()}" /></td>
-					<td><input style="width: 100%" name="type_${assgn.getId()}"
-						type="text" value="${assgn.getType()}" /></td>
-					<td width="10%">
-						<button name="btnUpdate_${assgn.getId()}" class="button">Update</button>
+					<td width="10%"><input style="width: 100%"
+						name="type_${assgn.getId()}" type="text"
+						value="${assgn.getType()}" /></td>
+					<td width="20%"><textarea rows="3" style="width: 100%"
+							name="description_${assgn.getId()}">${assgn.getDescription()}</textarea>
 					</td>
-				</tr>
-				<tr>
-					<td width="20%"><input style="width: 100%" readonly
-						name="assignment-courseName_${assgn.getId()}" type="text"
-						value="${assgn.getCourse().getCourseName()}" /></td>
-					<td colspan="4"><input style="width: 100%"
-						name="description_${assgn.getId()}" type="text"
-						value="${assgn.getDescription()}" /></td>
 					<td>
-						<button name="btnDelete_${assgn.getId()}" class="button">Delete</button>
+						<button name="btnUpdate_${assgn.getId()}" class="button button-small">Update</button>
+						<button name="btnDelete_${assgn.getId()}" class="button button-small">Delete</button>
 					</td>
 				</tr>
 			</c:forEach>
