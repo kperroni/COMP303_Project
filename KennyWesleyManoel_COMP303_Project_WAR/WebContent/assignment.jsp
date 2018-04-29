@@ -46,7 +46,8 @@
 		<ion-header-bar class="bar-stable">
 		<h4 class="title">List of your assignments</h4>
 		</ion-header-bar>
-		<ion-content>
+		<ion-content> <span style="color: red;">${messageErr}</span>
+		<span style="color: green;">${message}</span>
 		<table id="table">
 			<tr>
 				<th>Course Code</th>
@@ -63,26 +64,31 @@
 			</tr>
 			<c:forEach items="${assignments}" var="assgn">
 				<tr>
-					<td><input style="width:100%" name="assignment-courseCode_${assgn.getId()}"
-						type="text" value="${assgn.getCourse().getCourseCode()}" /></td>
-					<td width="20%"><input style="width:100%" name="title_${assgn.getId()}"
-						type="text" value="${assgn.getTitle()}" /></td>
-					<td width="5%"><input style="width:100%" name="weight_${assgn.getId()}"
-						type="text" value="${assgn.getWeight()}" /></td>
-					<td width="10%"><input style="width:100%" name="dueDate_${assgn.getId()}"
-						type="date" value="${assgn.getStringDueDate()}" /></td>
-					<td><input style="width:100%" name="type_${assgn.getId()}" type="text"
-						value="${assgn.getType()}" /></td>
+					<td><input style="width: 100%"
+						name="assignment-courseCode_${assgn.getId()}" type="text"
+						value="${assgn.getCourse().getCourseCode()}" /></td>
+					<td width="20%"><input style="width: 100%"
+						name="title_${assgn.getId()}" type="text"
+						value="${assgn.getTitle()}" /></td>
+					<td width="5%"><input style="width: 100%"
+						name="weight_${assgn.getId()}" type="text"
+						value="${assgn.getWeight()}" /></td>
+					<td width="10%"><input style="width: 100%"
+						name="dueDate_${assgn.getId()}" type="date"
+						value="${assgn.getStringDueDate()}" /></td>
+					<td><input style="width: 100%" name="type_${assgn.getId()}"
+						type="text" value="${assgn.getType()}" /></td>
 					<td width="10%">
 						<button name="btnUpdate_${assgn.getId()}" class="button">Update</button>
 					</td>
 				</tr>
 				<tr>
-					<td width="20%"><input style="width:100%" readonly
+					<td width="20%"><input style="width: 100%" readonly
 						name="assignment-courseName_${assgn.getId()}" type="text"
 						value="${assgn.getCourse().getCourseName()}" /></td>
-					<td colspan="4"><input style="width:100%" name="description_${assgn.getId()}"
-						type="text" value="${assgn.getDescription()}" /></td>
+					<td colspan="4"><input style="width: 100%"
+						name="description_${assgn.getId()}" type="text"
+						value="${assgn.getDescription()}" /></td>
 					<td>
 						<button name="btnDelete_${assgn.getId()}" class="button">Delete</button>
 					</td>
