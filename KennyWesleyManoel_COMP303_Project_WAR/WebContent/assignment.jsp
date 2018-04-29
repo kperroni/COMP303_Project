@@ -36,86 +36,60 @@
 	color: white;
 }
 </style>
-<title>Modify/Delete Assignments</title>
+<title>List Assignments</title>
 </head>
 <body>
 	<ion-nav-bar> <ion-nav-back-button class="button-clear">
 	<a href="index.html"><i class="ion-arrow-left-c">Back to Home</i></a> </ion-nav-back-button>
 	<!-- Initial content --> </ion-nav-bar>
-	<ion-header-bar class="bar-stable">
-	</ion-header-bar>
 	<form action="Assignments" method="post">
 		<ion-header-bar class="bar-stable">
 		<h4 class="title">List of your assignments</h4>
 		</ion-header-bar>
 		<ion-content>
-		<div class="row header">
-			<div class="col">Course Code</div>
-			<div class="col col-20">Course Name</div>
-			<div class="col col-20">Title</div>
-			<div class="col col-10">Weight</div>
-			<div class="col col-20">Due Date</div>
-			<div class="col">Type</div>
-			<div class="col"></div>
-		</div>
-		<div class="row header">
-			<div class="col col-80">Description</div>
-			<div class="col"></div>
-		</div>
-		<c:forEach items="${assignments}" var="assgn">
-			<div class="row">
-				<div class="col">
-					<label class="item item-input"> <input
-						name="assignment-courseCode_${assgn.getId()}" type="text"
-						value="${assgn.getCourse().getCourseCode()}" />
-					</label>
-				</div>
-				<div class="col col-20">
-					<label class="item item-input"> <input readonly
+		<table id="table">
+			<tr>
+				<th>Course Code</th>
+				<th width="20%">Title</th>
+				<th width="5%">Weight</th>
+				<th width="10%">Due Date</th>
+				<th width="10%">Type</th>
+				<th></th>
+			</tr>
+			<tr>
+				<th width="20%">Course Name</th>
+				<th colspan="4">Description</th>
+				<th></th>
+			</tr>
+			<c:forEach items="${assignments}" var="assgn">
+				<tr>
+					<td><input style="width:100%" name="assignment-courseCode_${assgn.getId()}"
+						type="text" value="${assgn.getCourse().getCourseCode()}" /></td>
+					<td width="20%"><input style="width:100%" name="title_${assgn.getId()}"
+						type="text" value="${assgn.getTitle()}" /></td>
+					<td width="5%"><input style="width:100%" name="weight_${assgn.getId()}"
+						type="text" value="${assgn.getWeight()}" /></td>
+					<td width="10%"><input style="width:100%" name="dueDate_${assgn.getId()}"
+						type="date" value="${assgn.getStringDueDate()}" /></td>
+					<td><input style="width:100%" name="type_${assgn.getId()}" type="text"
+						value="${assgn.getType()}" /></td>
+					<td width="10%">
+						<button name="btnUpdate_${assgn.getId()}" class="button">Update</button>
+					</td>
+				</tr>
+				<tr>
+					<td width="20%"><input style="width:100%" readonly
 						name="assignment-courseName_${assgn.getId()}" type="text"
-						value="${assgn.getCourse().getCourseName()}" />
-					</label>
-				</div>
-				<div class="col col-20">
-					<label class="item item-input"> <input
-						name="title_${assgn.getId()}" type="text"
-						value="${assgn.getTitle()}" />
-					</label>
-				</div>
-				<div class="col col-10">
-					<label class="item item-input"> <input
-						name="weight_${assgn.getId()}" type="text"
-						value="${assgn.getWeight()}" />
-					</label>
-				</div>
-				<div class="col col-20">
-					<label class="item item-input"> <input
-						name="dueDate_${assgn.getId()}" type="date"
-						value="${assgn.getStringDueDate()}" />
-					</label>
-				</div>
-				<div class="col">
-					<label class="item item-input"> <input
-						name="type_${assgn.getId()}" type="text"
-						value="${assgn.getType()}" />
-					</label>
-				</div>
-				<div class="col">
-					<button name="btnUpdate_${assgn.getId()}" class="button">Update</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col col-80">
-					<label class="item item-input"> <input
-						name="description_${assgn.getId()}" type="text"
-						value="${assgn.getDescription()}" />
-					</label>
-				</div>
-				<div class="col">
-					<button name="btnDelete_${assgn.getId()}" class="button">Delete</button>
-				</div>
-			</div>
-		</c:forEach> </ion-content>
+						value="${assgn.getCourse().getCourseName()}" /></td>
+					<td colspan="4"><input style="width:100%" name="description_${assgn.getId()}"
+						type="text" value="${assgn.getDescription()}" /></td>
+					<td>
+						<button name="btnDelete_${assgn.getId()}" class="button">Delete</button>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		</ion-content>
 	</form>
 </body>
 </html>
